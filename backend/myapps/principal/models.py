@@ -30,7 +30,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField()
     size = models.CharField(max_length=50, blank=True, null = True)
     colour = models.CharField(max_length=20, blank=True, null = True)
-    stock = models.BooleanField()
+    stock = models.PositiveIntegerField()
     image = models.ImageField(blank=True, null = True)
     brand = models.CharField(max_length=50, blank=True, null = True)
 
