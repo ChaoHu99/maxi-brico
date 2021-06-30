@@ -3,8 +3,8 @@
       <table>
         <tbody>
           <tr v-for="product in products" :key="product.id">
-            <td>{{ product.name }}</td>
-            <td>{{ product.description}}</td>   
+            <td>{{ product.name}}</td>
+            <td>{{ product.description}}</td>
           </tr>
         </tbody>
       </table>
@@ -37,6 +37,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  table{
+    margin-top: 10%;
+  }
 
-</style>
+</style> 
