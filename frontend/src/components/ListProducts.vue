@@ -3,8 +3,8 @@
       <table>
         <tbody>
           <tr v-for="product in products" :key="product.id">
-            <td>{{ product.name }}</td>
-            <td>{{ product.description}}</td>   
+            <td>{{ product.name}}</td>
+            <td>{{ product.description}}</td>
           </tr>
         </tbody>
       </table>
@@ -24,19 +24,19 @@ export default {
         this.getProducts();
     },
     methods: {
-        getProducts(){
-            axios
-            .get('http://127.0.0.1:8000/list/products/')
-            .then( response => {
+        async getProducts(){
+          let products = await axios.get('http://127.0.0.1:8000/list/products/').then( response => {
                 this.products = response.data
             })
-            .catch( e=> console.log(e))
+          return products;
         }
     }
     
 }
 </script>
 
-<style>
-
-</style>
+<style scoped>
+  table{
+    margin-top: 10%;
+  }
+</style> 
