@@ -2,7 +2,7 @@ from django.db import models
 
 class Product(models.Model):
 
-    barcode = models.PositiveBigIntegerField(blank=True, null = True)
+    barcode = models.PositiveBigIntegerField()
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null = True)
     SECTIONS = (('General', 'General'),
@@ -31,7 +31,7 @@ class Product(models.Model):
     size = models.CharField(max_length=50, blank=True, null = True)
     colour = models.CharField(max_length=20, blank=True, null = True)
     stock = models.PositiveIntegerField()
-    image = models.ImageField(blank=True, null = True)
+    image = models.URLField()
     brand = models.CharField(max_length=50, blank=True, null = True)
 
     def __str__(self):

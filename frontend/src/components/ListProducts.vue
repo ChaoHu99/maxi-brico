@@ -24,13 +24,11 @@ export default {
         this.getProducts();
     },
     methods: {
-        getProducts(){
-            axios
-            .get('http://127.0.0.1:8000/list/products/')
-            .then( response => {
+        async getProducts(){
+          let products = await axios.get('http://127.0.0.1:8000/list/products/').then( response => {
                 this.products = response.data
             })
-            .catch( e=> console.log(e))
+          return products;
         }
     }
     
@@ -41,5 +39,4 @@ export default {
   table{
     margin-top: 10%;
   }
-
 </style> 

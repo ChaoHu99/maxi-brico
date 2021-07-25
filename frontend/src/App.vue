@@ -1,7 +1,11 @@
 <template>
-  <div id="app">
-    <MainHeader></MainHeader>
-    <ListProducts></ListProducts>
+  <div id ="app">
+    <div id = "header">
+      <MainHeader></MainHeader>
+    </div>
+    <div id = "main-container">
+      <ListProducts></ListProducts>
+    </div>
   </div>
 </template>
 
@@ -13,16 +17,11 @@ export default {
   name: 'App',
   components: {
     MainHeader,
-    ListProducts
+    ListProducts,
   }
 }
 </script>
 
 <style scoped>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
+
 </style>

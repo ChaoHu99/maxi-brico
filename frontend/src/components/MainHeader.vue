@@ -1,113 +1,95 @@
 <template>
-    <div class="header">
-        <img class="logo" onClick="window.location.reload();" alt="MaxiBrico Logo" src="../assets/RedLogo.png">
-        <button class="sign-up" type="button" onclick="alert('Sign up!')">Regístrate</button>
-        <button class="sign-in" type="button" onclick="alert('Sign in!')">Iniciar sesión</button>
-        
+    <div class="container">
+        <div class="header">
+            <img class="logo" onClick="window.location.reload();" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/>
+            <div class="dropdown">
+                
+                <div class="dropdown__header" @click="toggleDropdown($event)">
+                    <img class="user-icon" alt="MaxiBrico Logo" src="../assets/UserIcon.png"/>
+                </div>
+                
+                <div class="dropdown__content">
+                    <ul>
+                        <li>Iniciar sesión</li>
+                        <li>Regístrate</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+    
 </template>
 
 <script>
-
+    export default {
+        methods: {
+            toggleDropdown (event) {
+                event.currentTarget.classList.toggle('is-active')
+            }
+        }
+    }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
     .header{
-        background: rgb(0, 0, 0);
+        background-color: black;
         top: 0%;
         left: 0%;
+        right: 0%;
         width: 100%;
+        height: 60px;
         position: absolute;
-        
+        display: inline;
     }
 
     .logo{
-        margin: auto;
         width:50px;
         height: 50px;
-        padding: 0.4% 0.4% 0.1% 5%;
+        padding-left: 5%;
         cursor: pointer;
+        top: -10%;
+        -ms-transform: translateY(10%);
+        transform: translateY(10%);
     }
-
-    .sign-in{
+    
+     .user-icon{
         float: right;
-        background-color: rgb(224, 43, 43);
-        border: none;
-        color: white;
-        width:8%;
-        height: 30px;
-        margin: 1% 0% 0.1% 0.4%;
-        cursor: pointer;
-
-    }
-    .sign-up{
-        float: right;
-        background-color: black;
-        border: none;
-        color: white;
-        width:8%;
-        height: 30px;
-        text-align: center;
-        margin: 1% 3% 0.1% 0.4%;
-        cursor: pointer;
-    }
-
-    @media only screen and (max-width: 1200px) {
-        .sign-in{
-            float: right;
-            background-color: rgb(224, 43, 43);
-            border: none;
-            color: white;
-            width:12%;
-            height: 40px;
-            margin: 1% 0% 0.1% 0.4%;
-            cursor: pointer;
-
-        }
-        .sign-up{
-            float: right;
-            background-color: black;
-            border: none;
-            color: white;
-            width:9%;
-            height: 40px;
-            text-align: center;
-            margin: 1% 8% 0.1% 0.4%;
-            cursor: pointer;
-        }
-    }
-
-     @media only screen and (max-width: 480px) {
-        .logo{
-        margin: auto;
+        position:fixed;
+        top: 0%;
+        right: 0%;
         width:50px;
         height: 50px;
-        padding: 0.8% 0.4% 0.1% 5%;
+        padding-right: 5%;
         cursor: pointer;
+        -ms-transform: translateY(10%);
+        transform: translateY(10%);
     }
-        
-        .sign-in{
-            float: right;
-            background-color: rgb(224, 43, 43);
-            border: none;
-            color: white;
-            width:18%;
-            height: 40px;
-            margin: 2% 0% 0.1% 0.4%;
-            cursor: pointer;
-            font-size: 12px;
+
+    .dropdown {
+        &__header {            
+            &.is-active {                
+                + .dropdown__content {
+                    float: right;
+                    border-style: groove;
+                    border-width: thin;
+                    height: 20%;
+                    width: 170px;
+                    margin-right: 5%;
+                    background: white;
+                    opacity: 1;
+                    visibility: visible;
+                    color: black;
+                    border-radius: 10px;
+                }
+            }
         }
-        .sign-up{
-            float: right;
-            background-color: black;
-            border: none;
-            color: white;
-            width:14%;
-            height: 40px;
-            text-align: center;
-            margin: 2% 8% 0.1% 0.4%;
-            cursor: pointer;
-            font-size: 12px;
+        &__content {
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: opacity .3s;
+            visibility: hidden;
         }
     }
 
