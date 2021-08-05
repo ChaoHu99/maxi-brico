@@ -1,15 +1,30 @@
 <template>
-    <div>
-      <table>
-        <tbody>
-          <tr v-for="product in products" :key="product.id">
-            <td>{{ product.name}}</td>
-            <td>{{ product.description}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
+  <div>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex class="list" v-for="product in products" :key="product.id">
+          <v-card hover class="product-card">
+              <v-img
+                :src=product.image
+                height="200px"
+              >
+              </v-img>
+
+              <v-card-title>
+                <h3>{{ product.name}}</h3>
+              </v-card-title>
+              
+              <v-card-text>
+                Precio: {{product.client_price}} € <br>
+                Stock: {{product.stock}}
+              </v-card-text>
+              
+              
+            </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>  
+  </div>
 </template>
 
 <script>
@@ -36,7 +51,13 @@ export default {
 </script>
 
 <style scoped>
-  table{
-    margin-top: 10%;
+  .list{
+    margin-top: 80px;
+
   }
+  .product-card{
+    width: 200px;
+    margin-left:2%;
+  }
+
 </style> 
