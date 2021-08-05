@@ -1,18 +1,18 @@
 <template>
     <div class="container">
         <div class="header">
-            <img class="logo" onClick="window.location.reload();" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/>
+            <v-img class="logo" onClick="window.location.reload();" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/>
             <div class="dropdown">
                 
                 <div class="dropdown__header" @click="toggleDropdown($event)">
-                    <img class="user-icon" alt="MaxiBrico Logo" src="../assets/UserIcon.png"/>
+                    <v-img class="user-icon" alt="MaxiBrico Logo" src="../assets/UserIcon.png"/>
                 </div>
                 
                 <div class="dropdown__content">
-                    <ul>
-                        <li>Iniciar sesión</li>
-                        <li>Regístrate</li>
-                    </ul>
+                    <button type="button" >Iniciar sesión</button>
+                    <br><br>
+                    <button type="button" >Regístrate</button>
+                    
                 </div>
             </div>
         </div>
@@ -46,21 +46,20 @@
     .logo{
         width:50px;
         height: 50px;
-        padding-left: 5%;
+        left: 5%;
         cursor: pointer;
-        top: -10%;
+        top: 0%;
         -ms-transform: translateY(10%);
         transform: translateY(10%);
     }
     
      .user-icon{
+        position: absolute;
         float: right;
-        position:fixed;
         top: 0%;
-        right: 0%;
+        right: 5%;
         width:50px;
         height: 50px;
-        padding-right: 5%;
         cursor: pointer;
         -ms-transform: translateY(10%);
         transform: translateY(10%);
@@ -73,14 +72,18 @@
                     float: right;
                     border-style: groove;
                     border-width: thin;
-                    height: 20%;
-                    width: 170px;
+                    height: 80px;
+                    width: 150px;
                     margin-right: 5%;
+                    padding-top: 10px;
+                    padding-left: 30px;
                     background: white;
                     opacity: 1;
                     visibility: visible;
                     color: black;
-                    border-radius: 10px;
+                    border-radius: 5px;
+                    z-index: 1;
+                    position: relative;
                 }
             }
         }

@@ -33,6 +33,9 @@ class Product(models.Model):
     stock = models.PositiveIntegerField()
     image = models.URLField()
     brand = models.CharField(max_length=50, blank=True, null = True)
+    client_price = models.DecimalField(max_digits=10, decimal_places=2, default=1.0)
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.barcode)
+
+   
