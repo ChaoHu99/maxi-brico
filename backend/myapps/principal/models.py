@@ -3,21 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone = models.PositiveIntegerField()
-    
-    def __str__(self):
-        return self.user.username
-
-class Address(models.Model):
-    address = models.TextField()
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.address
-
-
-
 class Product(models.Model):
 
     barcode = models.PositiveBigIntegerField()
