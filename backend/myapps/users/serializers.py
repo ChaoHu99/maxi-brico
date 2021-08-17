@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from myapps.users.models import User
 
+class UserTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username','name','surname', 'phone')
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
