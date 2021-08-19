@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="header">
-            <v-img class="logo" onClick="window.location.reload();" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/>
+            <router-link to="/"><img class="logo" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/></router-link>
             <div class="dropdown">
                 
                 <div class="dropdown__header" @click="toggleDropdown($event)">
@@ -9,9 +9,9 @@
                 </div>
                 
                 <div class="dropdown__content">
-                    <button type="button" >Iniciar sesión</button>
+                    <router-link to="/about">Iniciar sesión</router-link>
                     <br><br>
-                    <button type="button" >Regístrate</button>
+                    <router-link to="/sign-up">Regístrate</router-link>
                     
                 </div>
             </div>
@@ -37,17 +37,14 @@
         top: 0%;
         left: 0%;
         right: 0%;
-        width: 100%;
         height: 60px;
         position: absolute;
-        display: inline;
     }
 
     .logo{
         width:50px;
         height: 50px;
-        left: 5%;
-        cursor: pointer;
+        margin-left: 5%;
         top: 0%;
         -ms-transform: translateY(10%);
         transform: translateY(10%);
