@@ -4,23 +4,21 @@
       <v-layout row wrap>
         <v-flex class="list" v-for="product in products" :key="product.id">
           <v-card hover class="product-card">
-              <v-img
-                :src=product.image
-                height="200px"
-              >
-              </v-img>
+            <v-img
+              :src=product.image
+              height="200px"
+            >
+            </v-img>
 
-              <v-card-title>
-                <h3>{{ product.name}}</h3>
-              </v-card-title>
-              
-              <v-card-text>
-                Precio: {{product.client_price}} € <br>
-                Stock: {{product.stock}}
-              </v-card-text>
-              
-              
-            </v-card>
+            <v-card-title>
+              <h3>{{ product.name}}</h3>
+            </v-card-title>
+            
+            <v-card-text>
+              Precio: {{product.client_price}} € <br>
+              Stock: {{product.stock}}
+            </v-card-text>
+          </v-card>
         </v-flex>
       </v-layout>
     </v-container>  
