@@ -1,15 +1,24 @@
 <template>
     <div>
-        <h1>AAAAAAAAAAAAA</h1>
-        <product></product>
+        <MainHeader></MainHeader>
+        <div id = "main-container">
+            <Product></Product>
+        </div>
     </div>
 </template>
 
 <script>
 import Product from '../components/Product.vue'
+import MainHeader from '../components/MainHeader.vue'
 export default {
     components:{
-        Product
+        Product,
+        MainHeader
     }
 }
 </script>
+
+<style scoped>
+
+    
+</style>

@@ -1,22 +1,23 @@
 <template>
-    <div class="container">
-        <div class="header">
-            <router-link to="/"><img class="logo" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/></router-link>
-            <div class="dropdown">
+    <header class="header">
+    <div class="header">
+        <router-link to="/"><img class="logo" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/></router-link>
+        <router-link to="/"><img class="cart-logo" alt="Cart Logo" src="../assets/CartLogo.png"/></router-link>
+        <div class="dropdown">
+            
+            <div class="dropdown__header" @click="toggleDropdown($event)">
+                <v-img class="user-icon" alt="MaxiBrico Logo" src="../assets/UserIcon.png"/>
+            </div>
+            
+            <div class="dropdown__content">
+                <router-link style="text-decoration: none; color: inherit;" to="/about">Iniciar sesión</router-link>
+                <br><br>
+                <router-link style="text-decoration: none; color: inherit;" to="/sign-up">Regístrate</router-link>
                 
-                <div class="dropdown__header" @click="toggleDropdown($event)">
-                    <v-img class="user-icon" alt="MaxiBrico Logo" src="../assets/UserIcon.png"/>
-                </div>
-                
-                <div class="dropdown__content">
-                    <router-link to="/about">Iniciar sesión</router-link>
-                    <br><br>
-                    <router-link to="/sign-up">Regístrate</router-link>
-                    
-                </div>
             </div>
         </div>
     </div>
+    </header>
     
 </template>
 
@@ -49,12 +50,26 @@
         -ms-transform: translateY(10%);
         transform: translateY(10%);
     }
+
+    .cart-logo{
+        position: absolute;
+        float: right;
+        top: 0%;
+        margin-right: 50px;
+        right: 10%;
+        width:50px;
+        height: 50px;
+        cursor: pointer;
+        -ms-transform: translateY(10%);
+        transform: translateY(10%);
+    }
     
      .user-icon{
         position: absolute;
         float: right;
         top: 0%;
         right: 5%;
+        margin-left: 50px;
         width:50px;
         height: 50px;
         cursor: pointer;

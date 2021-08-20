@@ -3,6 +3,7 @@
     <div id = "header">
       <MainHeader></MainHeader>
       <h2>Regístrate en MaxiBrico</h2>
+    </div>
       <div class="sign-up">
         <form @submit.prevent="login">
           <div>
@@ -27,8 +28,7 @@
           </div>
           <input type="submit" value="register">
         </form>
-      </div>
-    </div>
+      </div> 
   </div>
 </template>
 

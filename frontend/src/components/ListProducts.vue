@@ -3,6 +3,7 @@
     <v-container>
       <v-layout row wrap>
         <v-flex class="list" v-for="product in products" :key="product.id">
+          <router-link style="text-decoration: none;" :to="{path: '/product/' + product.barcode}" >
           <v-card hover class="product-card">
             <v-img
               :src=product.image
@@ -19,6 +20,7 @@
               Stock: {{product.stock}}
             </v-card-text>
           </v-card>
+          </router-link>
         </v-flex>
       </v-layout>
     </v-container>  
