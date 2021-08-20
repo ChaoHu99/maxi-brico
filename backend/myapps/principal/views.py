@@ -16,3 +16,15 @@ def list_all_products(request):
 
     else:
         return Response({'message':'The request must be a GET'}, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def show_product(request,pk=None):
+
+    product = Product.objects.filter(barcode = pk).first()
+    if product:
+        # retrievevc
+        if request.method == 'GET': 
+            product_serializer = ProductSerializer(product)
+            return Response(product_serializer.data,status = status.HTTP_200_OK)
+    
+    return Response({'message':'No se ha encontrado un usuario con estos datos'},status = status.HTTP_400_BAD_REQUEST)

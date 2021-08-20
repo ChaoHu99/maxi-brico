@@ -40,11 +40,14 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    'myapps.principal'
+    'myapps.principal',
+    'myapps.users',
 ]
 
 THIRD_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders'
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -57,6 +60,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    'http://localhost:8080',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -127,6 +140,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'users.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
