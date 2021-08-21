@@ -31,8 +31,8 @@ class Product(models.Model):
     
     section = models.TextField(choices=SECTIONS, default='General')
     price = models.PositiveIntegerField()
-    size = models.CharField(max_length=50, blank=True, null = True)
-    colour = models.CharField(max_length=20, blank=True, null = True)
+    size = models.CharField(max_length=50, blank=True, null = True, default='Estándard')
+    colour = models.CharField(max_length=20, blank=True, null = True, default='Estándard')
     stock = models.PositiveIntegerField()
     image = models.URLField()
     brand = models.CharField(max_length=50, blank=True, null = True)

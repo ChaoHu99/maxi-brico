@@ -27,7 +27,12 @@ const routes = [
     path: '/product/:barcode',
     name: 'Products',
     component: () => import('../views/Products.vue')
-  }
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('../components/Cart.vue')
+  },
 ]
 
 const router = new VueRouter({
