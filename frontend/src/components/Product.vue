@@ -24,7 +24,13 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn class="add-cart" @click.native="addCurrentProductToCart(product)">Add to Cart</v-btn>
+          <v-btn class="add-cart" v-if="qtyCart===0" @click="addToCart">Add to Cart</v-btn>
+            <div class="botones" v-else>
+              <v-btn class="btns" @click="inc">+</v-btn>
+              <span class="qty" v-if="qtyCart>0">  x {{qtyCart}}  </span>
+              <v-btn class="btns" @click="dec"> - </v-btn>
+          <div v-if="qtyCart==product.stock" class="restriction">Ha alcanzado el máximo unidades</div>
+          </div>
         </v-card-actions>
         </div>  
     </v-card>
@@ -34,15 +40,29 @@
 
 <script>
 // import { mapActions } from 'vuex';
+import _ from 'lodash'
+import logica from '@/store/logica.js'
 import axios from 'axios'
 export default {
+  props:['producto'],
     data(){
         return{
-            product: {}
+            product: {},
+            shared:logica.data
         }
     },
     mounted(){
         this.getProduct();
+    },
+    computed: {
+        qtyCart(){
+            var busqueda = _.find(this.shared.cart, ['id',this.product.id])
+            if(typeof busqueda == 'object'){
+               return busqueda.cantidad
+            }else{
+              return 0;
+            }
+        }
     },
     methods: {
         async getProduct(){
@@ -52,12 +72,15 @@ export default {
             })
           return product;
         },
-        addProductToCart(product) {
-          this.addProduct(product);
+        addToCart(){            
+            logica.add(this.product)
         },
-        addCurrentProduct(product) {
-          this.currentProduct(product);
+        inc(){
+            logica.inc(this.product)
         },
+        dec(){
+            logica.dec(this.product)
+        }
     }
     
 }
@@ -69,8 +92,13 @@ export default {
     top: 100px;
     margin-left:10%;
     margin-right: 10%;
-    height: 550px; 
+    height: 580px; 
   }
+
+.restriction{
+  padding-top: 10px;
+  color: red;
+}
 
 @media only screen and (max-width: 700px) {
 
@@ -93,7 +121,7 @@ export default {
 
     .features{
     position: static;
-    transform: translateY(-110%);
+    transform: translateY(-100%);
     float: right;
     margin-right: 20%;
   }

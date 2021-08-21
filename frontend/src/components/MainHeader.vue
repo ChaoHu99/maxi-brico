@@ -2,7 +2,7 @@
     <header class="header">
     <div class="header">
         <router-link to="/"><img class="logo" alt="MaxiBrico Logo" src="../assets/RedLogo.png"/></router-link>
-        <router-link to="/"><img class="cart-logo" alt="Cart Logo" src="../assets/CartLogo.png"/></router-link>
+        <router-link to="/cart"><img class="cart-logo" alt="Cart Logo" src="../assets/CartLogo.png"/></router-link>
         <div class="dropdown">
             
             <div class="dropdown__header" @click="toggleDropdown($event)">
