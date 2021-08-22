@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from myapps.users.views import Login, Logout
+from myapps.principal.views import show_product, get_stripe_pub_key, create_order
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name = 'Login'),
     path('logout/', Logout.as_view(), name = 'Logout'),
     path('create/', include('myapps.users.urls')),
+    path('stripe/get-stripe-pub-key/', get_stripe_pub_key, name = 'get_stripe_pub_key'),
+    path('product/<int:pk>/', show_product, name = 'show_product'),
+    path('create/order/', create_order, name = 'create_order'),
 ]

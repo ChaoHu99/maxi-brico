@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+User = settings.AUTH_USER_MODEL
 
 class Product(models.Model):
 
@@ -40,5 +41,24 @@ class Product(models.Model):
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.barcode)
+
+class Order(models.Model):
+    PLAN_ACTIVE = 'active'
+    PLAN_CANCELLED = 'cancelled'
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    products = models.ManyToManyField(Product, related_name='products')
+    creation_date = models.DateTimeField(auto_now_add=True)
+    DELIVERY_STATUS = (('Preparación', 'Preparación'),
+        ('En proceso', 'En proceso'),
+        ('Entregado', 'Entregado'),
+        ('Rechazado', 'Rechazado'))
+    delivery_status = models.TextField(choices=DELIVERY_STATUS, default='Preparación', null=True, blank=True)
+    price = models.PositiveIntegerField(null=True, blank=True)
+    address = models.TextField(default='Recoger en la tienda')
+    ORDER_STATUS = ((PLAN_ACTIVE, 'Active'),
+        (PLAN_CANCELLED, 'Cancelled'))
+    order_status = models.TextField(choices=ORDER_STATUS, default=PLAN_ACTIVE, null=True, blank=True)
+    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
 
    

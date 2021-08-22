@@ -16,42 +16,109 @@
                     <br>
                  <div class="feature">Precio unidad: {{item.precio}}€</div>
             </div>
-            <div class="precio"> Precio: {{item.cantidad * item.precio}} €</div>
+            <div class="precio"> Precio: {{item.cantidad * item.stripe_precio/100}} €</div>
           </div>
 
         <div v-if="tam>0" class="total">
             <div>
                 <p>Precio total: {{total}}€</p><br>
             </div>
-            <button class="btn"> Tramitar pedido </button>
+            <div class="dropdown">
+                <div class="dropdown__header" @click="toggleDropdown($event)">
+                    <button class="btn"> Tramitar pedido </button>
+                </div>
+                
+                <div class="dropdown__content">
+                    <form @submit.prevent="createOrder">
+                        <input class="address" name="address" v-model="address" placeholder="Introduzca su dirección" type="text"><br>
+                        <button type="submit" class="btn"> Pagar ahora </button>
+                    </form>
+                </div>
+            </div>
         </div>
-
     </div>
 </template>
+<script src="https://js.stripe.com/v3/"></script>
 <script>
 import logica from '@/store/logica.js'
 import _ from 'lodash'
 import MainHeader from '../components/MainHeader.vue'
-    export default {
-        components:{
-        MainHeader
-    },
-        data(){
-            return {
-              items: logica.data.cart,
-              tam: logica.data.cart.length
-            }
-        },
-        computed: {
-           total(){
-               return _.sumBy(this.items, function(it) {
-                   return  (it.precio * it.cantidad)
-                })
-            }
+import axios from 'axios'
+export default {
+    components:{
+    MainHeader
+},
+    data(){
+        return {
+          items: logica.data.cart,
+          tam: logica.data.cart.length,
+          pub_key: '',
+          stripe: null,
+          address: "",
         }
+    },
+    async mounted(){
+        await this.getPubKey()
+        this.stripe = Stripe(this.pub_key)
+    },
+    computed: {
+       total(){
+           return _.sumBy(this.items, function(it) {
+               return  (it.stripe_precio * it.cantidad)/100
+            })
+        }
+    },
+    methods: {
+        async createOrder() {
+            const products = this.items.map((item) => item.id);
+            let aux = _.sumBy(this.items, function(it) {
+               return  (it.precio * it.cantidad)
+            });
+            const price = aux*100;
+            const { user, address} = this;
+            const res = await fetch('http://localhost:8000/create/order/',
+                {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user,
+                    products,
+                    price,
+                    address,
+                })
+            });
+            const data = await res.json();
+            console.log(data);
+        },
+            
+        async getPubKey() {
+            await axios.get('http://127.0.0.1:8000/stripe/get-stripe-pub-key/').then( response => {
+                this.pub_key = response.data.pub_key
+            })
+        },
+        async subscribe(order) {
+            const data = {
+                order: order
+            }
+            axios
+                .post('/api/v1/stripe/create_checkout_session/', data)
+                .then(response => {
+                    console.log(response)
+                    return this.stripe.redirectToCheckout({sessionId: response.data.sessionId})
+                })
+                .catch(error => {
+                    console.log('Error:', error)
+                })
+            },
+            toggleDropdown (event) {
+                event.currentTarget.classList.toggle('is-active')
+            }
     }
+}
 </script>
-<style>
+<style lang="scss">
 
 .car_pro {
     display:flex;
@@ -84,18 +151,53 @@ import MainHeader from '../components/MainHeader.vue'
     border: 1px solid black;
     padding-top: 10px;
     height: 40px;
-    width: 80px;
+    width: 120px;
     text-align:center;
     border-radius: 5px;
 }
 
 .btn{
-    background-color: red;
+    background-color: rgb(216, 54, 54);
     border-radius: 5px;
     color: rgb(0, 0, 0);
     height: 40px;
     width: 150px;
 
+}
+.dropdown {
+        &__header {            
+            &.is-active {                
+                + .dropdown__content {
+                    border-style: groove;
+                    border-width: thin;
+                    height: 100px;
+                    width: 500px;
+                    margin-top:10px;
+                    background: white;
+                    opacity: 1;
+                    visibility: visible;
+                    color: black;
+                    border-radius: 5px;
+                    z-index: 1;
+                    position: relative;
+                    display: inline-block;
+                }
+            }
+        }
+        &__content {
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: opacity .3s;
+            visibility: hidden;
+        }
+    }
+.address{
+    text-align: center;
+    margin-top: 10px;
+    height: 30px;
+    width: 70%;
+    margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -115,10 +217,19 @@ import MainHeader from '../components/MainHeader.vue'
     border: 1px solid black;
     padding-top: 10px;
     height: 40px;
-    width: 80px;
+    width: 120px;
     text-align:center;
     border-radius: 5px;
 }
+.dropdown {
+        &__header {            
+            &.is-active {                
+                + .dropdown__content {
+                    width: 80%;
+                }
+            }
+        }
+    }
 
 }
   

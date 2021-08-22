@@ -13,6 +13,7 @@ export default {
                 precio:producto.client_price,
                 cantidad: 1,
                 image:producto.image,
+                stripe_precio:producto.price
             })
         } 
     },

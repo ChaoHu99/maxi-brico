@@ -22,6 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-a0sl4!%%dbzsi#l)%yq5izu#6a5jftns2##vbo)zwqp6pno3wz'
 
+#Stripe
+STRIPE_PUB_KEY = 'pk_test_51JQvh3ELsXx0GH7pJlGLgOqobINOKsJkkyGJrQQft9kmZfhnqJZn73OD0dky5oo8onhFLXgpRo7mua8rKzqHIEil00nvPOCHSJ'
+STRIPE_SECRET_KEY = 'sk_test_51JQvh3ELsXx0GH7pP7Dy2gqLiAG8vnI0ucTB9qU7VTJnW6sEmIdTDdWzHPZtnuPoUU7AswkPRGDTJvsqqoZkZmYi00W6C2G7iv'
+
+STRIPE_PRICE_ID_PRODUCT_TEST = 'price_1JQvlMELsXx0GH7pxKwxqa1g'
+
+STRIPE_WEBHOOK_KEY = 'whsec_W0m84AzizLz95xyLJ9cgHjES4P9dQeYS'
+
+FRONTEND_SUCCESS_URL = 'http://localhost:8080/payment/thankyou'
+FRONTEND_CANCEL_URL = 'http://localhost:8080/payment'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
