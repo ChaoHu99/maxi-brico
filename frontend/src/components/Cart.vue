@@ -29,10 +29,8 @@
                 </div>
                 
                 <div class="dropdown__content">
-                    <form @submit.prevent="createOrder">
-                        <input class="address" name="address" v-model="address" placeholder="Introduzca su dirección" type="text"><br>
-                        <button type="submit" class="btn"> Pagar ahora </button>
-                    </form>
+                    <input class="address" name="address" v-model="address" placeholder="Introduzca su dirección" type="text"><br>
+                    <button @click="pay" class="btn"> Pagar ahora </button>
                 </div>
             </div>
         </div>
@@ -55,6 +53,7 @@ export default {
           pub_key: '',
           stripe: null,
           address: "",
+          order:{}
         }
     },
     async mounted(){
@@ -69,14 +68,19 @@ export default {
         }
     },
     methods: {
-        async createOrder() {
+        async getPubKey() {
+            await axios.get('http://127.0.0.1:8000/stripe/get-stripe-pub-key/').then( response => {
+                this.pub_key = response.data.pub_key
+            })
+        },
+        async pay() {
             const products = this.items.map((item) => item.id);
             let aux = _.sumBy(this.items, function(it) {
-               return  (it.precio * it.cantidad)
+               return  (it.stripe_precio * it.cantidad)
             });
-            const price = aux*100;
+            const price = aux;
             const { user, address} = this;
-            const res = await fetch('http://localhost:8000/create/order/',
+            let res = await fetch('http://localhost:8000/create/order/',
                 {
                 method: "POST",
                 headers: {
@@ -88,33 +92,24 @@ export default {
                     price,
                     address,
                 })
-            });
-            const data = await res.json();
-            console.log(data);
-        },
-            
-        async getPubKey() {
-            await axios.get('http://127.0.0.1:8000/stripe/get-stripe-pub-key/').then( response => {
-                this.pub_key = response.data.pub_key
             })
-        },
-        async subscribe(order) {
+            res = await res.json()
+            this.order = res.order
             const data = {
-                order: order
+                order: this.order
             }
             axios
-                .post('/api/v1/stripe/create_checkout_session/', data)
+                .post('http://127.0.0.1:8000/stripe/create-checkout-session/', data)
                 .then(response => {
-                    console.log(response)
                     return this.stripe.redirectToCheckout({sessionId: response.data.sessionId})
                 })
                 .catch(error => {
                     console.log('Error:', error)
                 })
             },
-            toggleDropdown (event) {
-                event.currentTarget.classList.toggle('is-active')
-            }
+        toggleDropdown (event) {
+            event.currentTarget.classList.toggle('is-active')
+        }
     }
 }
 </script>

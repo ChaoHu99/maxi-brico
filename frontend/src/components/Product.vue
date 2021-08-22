@@ -24,7 +24,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn class="add-cart" v-if="qtyCart===0" @click="addToCart">Add to Cart</v-btn>
+          <v-btn class="add-cart" v-if="qtyCart===0 && product.stock>0" @click="addToCart">Add to Cart</v-btn>
             <div class="botones" v-else>
               <v-btn class="btns" @click="inc">+</v-btn>
               <span class="qty" v-if="qtyCart>0">  x {{qtyCart}}  </span>

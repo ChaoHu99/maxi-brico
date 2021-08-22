@@ -33,6 +33,16 @@ const routes = [
     name: 'Cart',
     component: () => import('../components/Cart.vue')
   },
+  {
+    path: '/payment-success',
+    name: 'PaymentSuccess',
+    component: () => import('../views/PaymentSuccess.vue')
+  },
+  {
+    path: '/payment-failed',
+    name: 'PaymentFailed',
+    component: () => import('../views/PaymentFailed.vue')
+  },
 ]
 
 const router = new VueRouter({

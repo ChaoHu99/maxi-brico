@@ -30,9 +30,6 @@ STRIPE_PRICE_ID_PRODUCT_TEST = 'price_1JQvlMELsXx0GH7pxKwxqa1g'
 
 STRIPE_WEBHOOK_KEY = 'whsec_W0m84AzizLz95xyLJ9cgHjES4P9dQeYS'
 
-FRONTEND_SUCCESS_URL = 'http://localhost:8080/payment/thankyou'
-FRONTEND_CANCEL_URL = 'http://localhost:8080/payment'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

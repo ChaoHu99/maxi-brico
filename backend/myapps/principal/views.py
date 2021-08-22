@@ -1,5 +1,8 @@
 import json
 import stripe
+from django.conf import settings
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -41,8 +44,8 @@ def create_order(request):
         
         # validation
         if order_serializer.is_valid():
-            order_serializer.save()            
-            return Response({'message':'Order created successfully!'},status = status.HTTP_201_CREATED)
+            order_serializer.save()
+            return Response({'message':'Order created successfully!', 'order': order_serializer.data},status = status.HTTP_201_CREATED)
         
         return Response(order_serializer.errors,status = status.HTTP_400_BAD_REQUEST)
 
@@ -55,27 +58,47 @@ def get_stripe_pub_key(request):
 @api_view(['POST'])
 def create_checkout_session(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    data = json.loads(request.body)
-    product = data['product']
-
-    price_id = settings.STRIPE_PRICE_ID_PRODUCT_TEST
-    
-    team = Team.objects.filter(members__in=[request.user]).first() 
 
     try:
         checkout_session = stripe.checkout.Session.create(
-            client_reference_id = team.id,
-            success_url = '%s?session_id={CHECKOUT_SESSION_ID}' % settings.FRONTEND_WEBSITE_SUCCESS_URL,
-            cancel_url = '%s' % settings.FRONTEND_WEBSITE_CANCEL_URL,
-            payment_method_types = ['card'],
-            mode = 'subscription',
+            success_url = "http://localhost:8080/payment-success",
+            cancel_url = "http://localhost:8080/payment-failed",
+            payment_method_types = ["card"],
+            mode = "payment",
             line_items = [
-                {
-                    'price': price_id,
+                {   
+                    'name': 'Pedido de Maxi Brico',
+                    'currency': 'EUR',
+                    'amount': order['price'],
                     'quantity': 1
                 }
-            ]
+            ],
+            
         )
         return Response({'sessionId': checkout_session['id']})
     except Exception as e:
         return Response({'error': str(e)})
+
+@csrf_exempt
+def stripe_webhook(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    webhook_key = settings.STRIPE_WEBHOOK_KEY
+    payload = request.body
+    sign_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    print('payload', payload)
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sign_header, webhook_key
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
+    except stripe.error.SignaturVerificationError as e:
+        return HttpResponse(status=400)
+    
+    if event['type'] == 'checkout.session.completed':
+        payment_intent = event['data']['object']
+
+    return HttpResponse(status=200)

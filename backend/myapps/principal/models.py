@@ -56,9 +56,5 @@ class Order(models.Model):
     delivery_status = models.TextField(choices=DELIVERY_STATUS, default='Preparación', null=True, blank=True)
     price = models.PositiveIntegerField(null=True, blank=True)
     address = models.TextField(default='Recoger en la tienda')
-    ORDER_STATUS = ((PLAN_ACTIVE, 'Active'),
-        (PLAN_CANCELLED, 'Cancelled'))
-    order_status = models.TextField(choices=ORDER_STATUS, default=PLAN_ACTIVE, null=True, blank=True)
-    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True)
 
    
