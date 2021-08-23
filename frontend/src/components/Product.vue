@@ -24,7 +24,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn class="add-cart" v-if="qtyCart===0" @click="addToCart">Add to Cart</v-btn>
+          <v-btn class="add-cart" v-if="qtyCart===0 && product.stock>0" @click="addToCart">Add to Cart</v-btn>
             <div class="botones" v-else>
               <v-btn class="btns" @click="inc">+</v-btn>
               <span class="qty" v-if="qtyCart>0">  x {{qtyCart}}  </span>
@@ -67,7 +67,7 @@ export default {
     methods: {
         async getProduct(){
           let barcode = this.$route.params.barcode
-          let product = await axios.get('http://127.0.0.1:8000/list/product/'+barcode).then( response => {
+          let product = await axios.get('http://127.0.0.1:8000/product/'+barcode).then( response => {
                 this.product = response.data
             })
           return product;
