@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from myapps.users.views import Login, Logout
-from myapps.principal.views import show_product, get_stripe_pub_key, create_order, create_checkout_session, stripe_webhook
+from myapps.principal.views import show_product, get_stripe_pub_key, create_order, create_checkout_session, stripe_webhook, update_product
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('create/order/', create_order, name = 'create_order'),
     path('stripe/create-checkout-session/', create_checkout_session, name = 'create_checkout_session'),
     path('stripe/webhook/', stripe_webhook, name = 'stripe_webhook'),
+    path('update-product/<int:pk>', update_product, name = 'update_product'),
 ]

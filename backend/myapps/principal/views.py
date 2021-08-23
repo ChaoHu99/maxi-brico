@@ -29,10 +29,23 @@ def show_product(request,pk=None):
 
     product = Product.objects.filter(barcode = pk).first()
     if product:
-        # retrievevc
         if request.method == 'GET': 
             product_serializer = ProductSerializer(product)
             return Response(product_serializer.data,status = status.HTTP_200_OK)
+    
+    return Response({'message':'No se ha encontrado un usuario con estos datos'},status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def update_product(request,pk=None):
+
+    product = Product.objects.filter(barcode = pk).first()
+    if product:
+        if request.method == 'POST': 
+            product_serializer = ProductSerializer(product, data = request.data)
+            if product_serializer.is_valid():
+                product_serializer.save()
+                return Response(product_serializer.data,status = status.HTTP_200_OK)
+            return Response(product_serializer.errors,status = status.HTTP_400_BAD_REQUEST)
     
     return Response({'message':'No se ha encontrado un usuario con estos datos'},status = status.HTTP_400_BAD_REQUEST)
 
@@ -58,6 +71,8 @@ def get_stripe_pub_key(request):
 @api_view(['POST'])
 def create_checkout_session(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
+    data = json.loads(request.body)
+    order = data['order']
 
     try:
         checkout_session = stripe.checkout.Session.create(

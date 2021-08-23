@@ -8,9 +8,11 @@ export default {
         var busqueda = _.find(this.data.cart, ['id',producto.id])
         if(typeof busqueda != 'object'){
             this.data.cart.push({
+                barcode:producto.barcode,
                 id:producto.id,
                 nombre :producto.name,
                 precio:producto.client_price,
+                stock:producto.stock,
                 cantidad: 1,
                 image:producto.image,
                 stripe_precio:producto.price

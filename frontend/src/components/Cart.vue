@@ -74,6 +74,27 @@ export default {
             })
         },
         async pay() {
+            for (let i = 0;i<this.items.length;i++){
+                let barcode = this.items[i].barcode;
+                let name = this.items[i].nombre;
+                let price = this.items[i].stripe_precio;
+                let stock = this.items[i].stock - this.items[i].cantidad;
+                let image = this.items[i].image;
+                axios.post('http://localhost:8000/update-product/'+barcode, {
+                    barcode,
+                    name,
+                    price,
+                    stock,
+                    image
+                }, {
+                    method: 'POST',
+                    headers: {
+                                            "Content-Type": "application/json"
+                    }
+                })
+                
+            }
+
             const products = this.items.map((item) => item.id);
             let aux = _.sumBy(this.items, function(it) {
                return  (it.stripe_precio * it.cantidad)
@@ -101,6 +122,7 @@ export default {
             axios
                 .post('http://127.0.0.1:8000/stripe/create-checkout-session/', data)
                 .then(response => {
+                    console.log(response.data.sessionId)
                     return this.stripe.redirectToCheckout({sessionId: response.data.sessionId})
                 })
                 .catch(error => {
