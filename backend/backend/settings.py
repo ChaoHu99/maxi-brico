@@ -22,6 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-a0sl4!%%dbzsi#l)%yq5izu#6a5jftns2##vbo)zwqp6pno3wz'
 
+#Stripe
+STRIPE_PUB_KEY = 'pk_test_51JQvh3ELsXx0GH7pJlGLgOqobINOKsJkkyGJrQQft9kmZfhnqJZn73OD0dky5oo8onhFLXgpRo7mua8rKzqHIEil00nvPOCHSJ'
+STRIPE_SECRET_KEY = 'sk_test_51JQvh3ELsXx0GH7pP7Dy2gqLiAG8vnI0ucTB9qU7VTJnW6sEmIdTDdWzHPZtnuPoUU7AswkPRGDTJvsqqoZkZmYi00W6C2G7iv'
+
+STRIPE_PRICE_ID_PRODUCT_TEST = 'price_1JQvlMELsXx0GH7pxKwxqa1g'
+
+STRIPE_WEBHOOK_KEY = 'whsec_W0m84AzizLz95xyLJ9cgHjES4P9dQeYS'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,11 +48,16 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    'myapps.principal'
+    'myapps.principal',
+    'myapps.users',
 ]
 
 THIRD_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -57,6 +70,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -127,6 +157,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'users.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -137,3 +168,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
