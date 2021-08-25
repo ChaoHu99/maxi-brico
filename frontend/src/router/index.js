@@ -26,12 +26,18 @@ const routes = [
   {
     path: '/product/:barcode',
     name: 'Products',
-    component: () => import('../views/Products.vue')
+    component: () => import('../views/Products.vue'),
+    meta: {
+      requiresLogin: true
+    }
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('../components/Cart.vue')
+    component: () => import('../components/Cart.vue'),
+    meta: {
+      requiresLogin: true
+    }
   },
   {
     path: '/payment-success',
@@ -42,6 +48,21 @@ const routes = [
     path: '/payment-failed',
     name: 'PaymentFailed',
     component: () => import('../views/PaymentFailed.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: () => import('../views/Logout.vue')
+  },
+  {
+    path: '/terms',
+    name: 'TermsConditions',
+    component: () => import('../views/TermsConditions.vue')
   },
 ]
 

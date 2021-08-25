@@ -42,6 +42,7 @@ import logica from '@/store/logica.js'
 import _ from 'lodash'
 import MainHeader from '../components/MainHeader.vue'
 import axios from 'axios'
+import store from '@/store.js'
 export default {
     components:{
     MainHeader
@@ -53,7 +54,8 @@ export default {
           pub_key: '',
           stripe: null,
           address: "",
-          order:{}
+          order:{},
+          user: 0
         }
     },
     async mounted(){
@@ -74,6 +76,12 @@ export default {
             })
         },
         async pay() {
+            await axios.get('http://127.0.0.1:8000/get-user/'
+            , {headers: { Authorization: `Bearer ${store.state.accessToken}`}}
+            ).then( response => {
+                this.user = response.data.user
+            })
+            
             for (let i = 0;i<this.items.length;i++){
                 let barcode = this.items[i].barcode;
                 let name = this.items[i].nombre;
@@ -85,11 +93,11 @@ export default {
                     name,
                     price,
                     stock,
-                    image
+                    image,
                 }, {
                     method: 'POST',
                     headers: {
-                                            "Content-Type": "application/json"
+                        "Content-Type": "application/json"
                     }
                 })
                 

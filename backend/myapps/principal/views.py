@@ -6,15 +6,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from myapps.principal.models import Product
 from myapps.principal.serializers import ProductSerializer, OrderSerializer
 from django.conf import settings
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def list_all_products(request):
-
-    # list
+    
     if request.method == 'GET':
         # queryset
         products = Product.objects.all()
@@ -44,10 +45,11 @@ def update_product(request,pk=None):
             product_serializer = ProductSerializer(product, data = request.data)
             if product_serializer.is_valid():
                 product_serializer.save()
+                print('AAAAAAAAAAAAAa')
                 return Response(product_serializer.data,status = status.HTTP_200_OK)
             return Response(product_serializer.errors,status = status.HTTP_400_BAD_REQUEST)
     
-    return Response({'message':'No se ha encontrado un usuario con estos datos'},status = status.HTTP_400_BAD_REQUEST)
+    return Response({'message':'No se ha encontrado un producto con estos datos'},status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def create_order(request):
