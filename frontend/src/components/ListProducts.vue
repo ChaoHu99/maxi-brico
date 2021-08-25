@@ -17,7 +17,6 @@
             
             <v-card-text>
               Precio: {{product.client_price}} € <br>
-              Stock: {{product.stock}}
             </v-card-text>
           </v-card>
           </router-link>

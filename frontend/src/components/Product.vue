@@ -18,7 +18,6 @@
         <v-card-text>
           {{product.description}}<br>
           Precio: {{product.client_price}} € <br>
-          Stock: {{product.stock}}<br>
           Color: {{product.colour}}<br>
           Medida: {{product.size}}
         </v-card-text>
@@ -29,7 +28,7 @@
               <v-btn class="btns" @click="inc">+</v-btn>
               <span class="qty" v-if="qtyCart>0">  x {{qtyCart}}  </span>
               <v-btn class="btns" @click="dec"> - </v-btn>
-          <div v-if="qtyCart==product.stock" class="restriction">Ha alcanzado el máximo unidades</div>
+          <div v-if="qtyCart==product.stock" class="restriction">No hay más depósito</div>
           </div>
         </v-card-actions>
         </div>  

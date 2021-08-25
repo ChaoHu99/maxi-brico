@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from myapps.principal.models import Product
+from myapps.principal.models import Product, Order
 from myapps.principal.serializers import ProductSerializer, OrderSerializer
 from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
@@ -63,6 +63,18 @@ def create_order(request):
             return Response({'message':'Order created successfully!', 'order': order_serializer.data},status = status.HTTP_201_CREATED)
         
         return Response(order_serializer.errors,status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def list_orders(request):
+    
+    if request.method == 'GET':
+        user = request.user.id
+        orders = Order.objects.all().filter(user = user)
+        orders_serializer = OrderSerializer(orders,many = True)
+        return Response(orders_serializer.data,status = status.HTTP_200_OK)
+
+    else:
+        return Response({'message':'The request must be a GET'}, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_stripe_pub_key(request):

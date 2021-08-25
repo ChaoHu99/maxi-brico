@@ -1,6 +1,5 @@
-  
 <template>
-  <div class="log">
+  <div class="logout">
   </div>
 </template>
 
