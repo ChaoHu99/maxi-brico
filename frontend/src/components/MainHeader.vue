@@ -10,10 +10,9 @@
             </div>
             
             <div class="dropdown__content">
-                <router-link style="text-decoration: none; color: inherit;" to="/about">Iniciar sesión</router-link>
+                <router-link style="text-decoration: none; color: inherit;" to="/login">Iniciar sesión</router-link>
                 <br><br>
-                <router-link style="text-decoration: none; color: inherit;" to="/sign-up">Regístrate</router-link>
-                
+                <router-link style="text-decoration: none; color: inherit;" to="/sign-up">Regístrate</router-link>                
             </div>
         </div>
     </div>

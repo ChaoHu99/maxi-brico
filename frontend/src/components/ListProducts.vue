@@ -40,7 +40,9 @@ export default {
     },
     methods: {
         async getProducts(){
-          let products = await axios.get('http://127.0.0.1:8000/list/products/').then( response => {
+          let products = await axios.get('http://127.0.0.1:8000/list/products/'
+          // , {headers: { Authorization: `Bearer ${store.state.accessToken}`}}
+          ).then( response => {
                 this.products = response.data
             })
           return products;
