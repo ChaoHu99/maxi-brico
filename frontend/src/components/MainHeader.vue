@@ -14,7 +14,9 @@
                 <br><br>
                 <router-link style="text-decoration: none; color: inherit;" to="/sign-up">Regístrate</router-link>
                 <br><br>
-                <router-link style="text-decoration: none; color: inherit;" to="/logout">Cierra sesión</router-link>                
+                <router-link style="text-decoration: none; color: inherit;" to="/my-orders">Mis pedidos</router-link>  
+                <br><br>
+                <router-link style="text-decoration: none; color: inherit;" to="/logout">Cierra sesión</router-link>              
             </div>
         </div>
     </div>
@@ -85,7 +87,7 @@
                     float: right;
                     border-style: groove;
                     border-width: thin;
-                    height: 120px;
+                    height: 150px;
                     width: 150px;
                     margin-right: 5%;
                     padding-top: 10px;

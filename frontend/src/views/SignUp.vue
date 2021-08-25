@@ -27,7 +27,7 @@
             <input class="input" id="password" v-model="password" placeholder="Contraseña" type="password">
           </div>
           <div class="checkbox">
-            <input type="checkbox" required> He leido y acepto los <router-link to="/terms">términos y condiciones</router-link>
+            <input id="checkbox" type="checkbox" required> He leido y acepto los <router-link to="/terms">términos y condiciones</router-link>
           </div>
           <div class="final">
             <button @click="validation" class="btn" type="submit"> Regístrate </button>
@@ -58,6 +58,7 @@ export default {
         let c = document.getElementById("surname").value;
         let d = document.getElementById("phone").value;
         let e = document.getElementById("password").value;
+        let f = document.getElementById("checkbox").checked;
         let text;
         if (a == "" || b == "" || c == "" || d == "" || e == "") {
           text = "Debe rellenar todos los campos";
@@ -65,6 +66,9 @@ export default {
         }
         else if (d.toString().length != 9){
           text = "El teléfono debe tener 9 dígitos";
+          document.getElementById("restriction").innerHTML = text;
+        } else if (f == false) {
+          text = "Debe leer y aceptar los términos y condiciones"
           document.getElementById("restriction").innerHTML = text;
         } else {
           text = "Usuario creado";
