@@ -177,5 +177,5 @@ REST_FRAMEWORK = {
 
 BASEURL = "https://maxi-brico.herokuapp.com/"
 
-import django_heroku from
+import django_heroku
 django_heroku.settings(locals())
