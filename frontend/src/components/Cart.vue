@@ -71,12 +71,12 @@ export default {
     },
     methods: {
         async getPubKey() {
-            await axios.get('http://127.0.0.1:8000/stripe/get-stripe-pub-key/').then( response => {
+            await axios.get('https://maxi-brico.herokuapp.com/stripe/get-stripe-pub-key/').then( response => {
                 this.pub_key = response.data.pub_key
             })
         },
         async pay() {
-            await axios.get('http://127.0.0.1:8000/get-user/'
+            await axios.get('https://maxi-brico.herokuapp.com/get-user/'
             , {headers: { Authorization: `Bearer ${store.state.accessToken}`}}
             ).then( response => {
                 this.user = response.data.user
@@ -88,7 +88,7 @@ export default {
                 let price = this.items[i].stripe_precio;
                 let stock = this.items[i].stock - this.items[i].cantidad;
                 let image = this.items[i].image;
-                axios.post('http://localhost:8000/update-product/'+barcode, {
+                axios.post('https://maxi-brico.herokuapp.com/update-product/'+barcode, {
                     barcode,
                     name,
                     price,
@@ -109,7 +109,7 @@ export default {
             });
             const price = aux;
             const { user, address} = this;
-            let res = await fetch('http://localhost:8000/create/order/',
+            let res = await fetch('https://maxi-brico.herokuapp.com/create/order/',
                 {
                 method: "POST",
                 headers: {
@@ -128,7 +128,7 @@ export default {
                 order: this.order
             }
             axios
-                .post('http://127.0.0.1:8000/stripe/create-checkout-session/', data)
+                .post('https://maxi-brico.herokuapp.com/stripe/create-checkout-session/', data)
                 .then(response => {
                     console.log(response.data.sessionId)
                     return this.stripe.redirectToCheckout({sessionId: response.data.sessionId})

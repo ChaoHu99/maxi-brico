@@ -10,7 +10,7 @@
           <v-card hover class="product-card">
 
             <v-card-title>
-              <h3>{{ order.address}} {{order.creation_date.split('T')[0]}}</h3>
+              <h3>{{ order.address}} <br> {{order.creation_date.split('T')[0]}}</h3>
             </v-card-title>
             
             <v-card-text>
@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         async getOrders(){
-          let orders = await axios.get('http://127.0.0.1:8000/list/orders/'
+          let orders = await axios.get('https://maxi-brico.herokuapp.com/list/orders/'
           , {headers: { Authorization: `Bearer ${store.state.accessToken}`}}
           ).then( response => {
                 this.orders = response.data

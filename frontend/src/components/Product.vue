@@ -66,7 +66,7 @@ export default {
     methods: {
         async getProduct(){
           let barcode = this.$route.params.barcode
-          let product = await axios.get('http://127.0.0.1:8000/product/'+barcode).then( response => {
+          let product = await axios.get('https://maxi-brico.herokuapp.com/product/'+barcode).then( response => {
                 this.product = response.data
             })
           return product;
