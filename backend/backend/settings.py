@@ -76,6 +76,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
     'http://127.0.0.1:8000',
+    'https://maxi-brico.herokuapp.com'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True 
@@ -83,10 +84,12 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
     'http://127.0.0.1:8000',
+    'https://maxi-brico.herokuapp.com'
 ]
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:8080',
     'http://127.0.0.1:8000',
+    'https://maxi-brico.herokuapp.com'
 ]
 
 ROOT_URLCONF = 'backend.urls'
