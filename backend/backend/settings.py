@@ -174,3 +174,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+
+BASEURL = "https://maxi-brico.herokuapp.com/"
+
+import django_heroku from
+django_heroku.settings(locals())
