@@ -45,7 +45,6 @@ def update_product(request,pk=None):
             product_serializer = ProductSerializer(product, data = request.data)
             if product_serializer.is_valid():
                 product_serializer.save()
-                print('AAAAAAAAAAAAAa')
                 return Response(product_serializer.data,status = status.HTTP_200_OK)
             return Response(product_serializer.errors,status = status.HTTP_400_BAD_REQUEST)
     

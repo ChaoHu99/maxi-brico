@@ -77,7 +77,7 @@ export default {
       },
     async signup() {
       const { username, name, surname, phone, password} = this;
-      const res = await fetch('http://localhost:8000/create/user/',
+      const res = await fetch('https://maxi-brico.herokuapp.com/create/user/',
         {
           method: "POST",
           headers: {

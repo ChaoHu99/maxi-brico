@@ -32,7 +32,7 @@ export default new Vuex.Store({
     },
     userLogin (context, usercredentials) {
       return new Promise((resolve, reject) => {
-        axios.post('/api-token/', {
+        axios.post('https://maxi-brico.herokuapp.com/api-token/', {
           username: usercredentials.username,
           password: usercredentials.password
         }, {

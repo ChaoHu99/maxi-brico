@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         async getProducts(){
-          let products = await axios.get('http://127.0.0.1:8000/list/products/'
+          let products = await axios.get('https://maxi-brico.herokuapp.com/list/products/'
           // , {headers: { Authorization: `Bearer ${store.state.accessToken}`}}
           ).then( response => {
                 this.products = response.data
